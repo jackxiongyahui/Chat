@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
-public class ChatClient extends Frame {
+public class ChatClient1 extends Frame {
 
     public static final int DEFAULT_BUFFER_SIZE = 1024;
     private Selector selector;
@@ -38,7 +38,7 @@ public class ChatClient extends Frame {
     private boolean isConnected = false;
     private Charset charset = StandardCharsets.UTF_8;
 
-    public ChatClient(String name, int x, int y, int w, int h) {
+    public ChatClient1(String name, int x, int y, int w, int h) {
         super(name);
         initFrame(x, y, w, h);
         initNetWork();
@@ -260,7 +260,7 @@ public class ChatClient extends Frame {
                         }
                     }
                     String info = new String(response.getBody(), charset);
-                    JOptionPane.showMessageDialog(ChatClient.this, info);
+                    JOptionPane.showMessageDialog(ChatClient1.this, info);
                     break;
                 case NORMAL:
                     String content = formatMessage(taContent.getText(), response);
@@ -274,7 +274,7 @@ public class ChatClient extends Frame {
                         FileUtil.save(path, buf);
                         if(path.endsWith("jpg")){
                             //显示该图片
-                            new PictureDialog(ChatClient.this, "图片", false, path);
+                            new PictureDialog(ChatClient1.this, "图片", false, path);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -286,15 +286,13 @@ public class ChatClient extends Frame {
 
         private String formatMessage(String originalText, Response response) {
             ResponseHeader header = response.getHeader();
-            StringBuilder sb = new StringBuilder();
-            sb.append(originalText)
-                    .append(header.getSender())
-                    .append(": ")
-                    .append(new String(response.getBody(), charset))
-                    .append("    ")
-                    .append(DateTimeUtil.formatLocalDateTime(header.getTimestamp()))
-                    .append("\n");
-            return sb.toString();
+            return originalText
+                + header.getSender()
+                + ": "
+                + new String(response.getBody(), charset)
+                + "    "
+                + DateTimeUtil.formatLocalDateTime(header.getTimestamp())
+                + "\n";
         }
     }
 
@@ -313,7 +311,7 @@ public class ChatClient extends Frame {
 
     public static void main(String[] args) {
         System.out.println("Initialing...");
-        ChatClient client = new ChatClient("Client", 200, 200, 300, 200);
+        ChatClient1 client = new ChatClient1("Client1", 200, 200, 300, 200);
         client.launch();
     }
 }

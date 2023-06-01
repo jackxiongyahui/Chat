@@ -36,7 +36,7 @@ public final class SpringContextUtil {
     }
 
     public static <T> T getBean(String... partName) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < partName.length; ++i) {
             sb.append(partName[i]);
             if (i != partName.length - 1) {

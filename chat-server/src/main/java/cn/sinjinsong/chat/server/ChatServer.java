@@ -7,6 +7,8 @@ import cn.sinjinsong.chat.server.util.SpringContextUtil;
 import cn.sinjinsong.common.domain.Message;
 import cn.sinjinsong.common.domain.Task;
 import cn.sinjinsong.common.util.ProtoStuffUtil;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
@@ -27,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 /**
+ * @author xiongyahui
  * @Slf4j会为当前类生成一个名为log的日志对象
  * Slf4j可以在打印的字符串中添加占位符，以避免字符串的拼接
  */
@@ -178,10 +181,10 @@ public class ChatServer {
      */
     private class ReadEventHandler implements Runnable {
 
-        private ByteBuffer buf;
-        private SocketChannel client;
-        private ByteArrayOutputStream baos;
-        private SelectionKey key;
+        private final ByteBuffer buf;
+        private final SocketChannel client;
+        private final ByteArrayOutputStream baos;
+        private final SelectionKey key;
 
         public ReadEventHandler(SelectionKey key) {
             this.key = key;
@@ -202,11 +205,13 @@ public class ChatServer {
                 if (size == -1) {
                     return;
                 }
-                log.info("读取完毕，继续监听");
+                log.info("监听：{}", ProtoStuffUtil.deserialize(baos.toByteArray(), Message.class));
                 //继续监听读取事件
                 key.interestOps(key.interestOps() | SelectionKey.OP_READ);
                 key.selector().wakeup();
                 byte[] bytes = baos.toByteArray();
+                Message msg = ProtoStuffUtil.deserialize(baos.toByteArray(), Message.class);
+                log.info("监听到消息 : 发送人：{}, 消息内容: {}", msg.getHeader().getSender(), new String(msg.getBody(), StandardCharsets.UTF_8));
                 baos.close();
                 Message message = ProtoStuffUtil.deserialize(bytes, Message.class);
                 MessageHandler messageHandler = SpringContextUtil.getBean("MessageHandler", message.getHeader().getType().toString().toLowerCase());
