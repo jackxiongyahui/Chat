@@ -42,7 +42,7 @@ public class NormalMessageHandler extends MessageHandler {
                                         .sender(message.getHeader().getSender())
                                         .timestamp(message.getHeader().getTimestamp())
                                         .build(),
-                                PromptMsgProperty.RECEIVER_LOGGED_OFF.getBytes(PromptMsgProperty.charset)));
+                                PromptMsgProperty.RECEIVER_LOGGED_OFF.getBytes(PromptMsgProperty.CHARSET)));
                 clientChannel.write(ByteBuffer.wrap(response));
             } else {
                 byte[] response = ProtoStuffUtil.serialize(

@@ -42,7 +42,7 @@ public class LogoutMessageHandler extends MessageHandler {
                             .responseCode(ResponseCode.LOGOUT_SUCCESS.getCode())
                             .sender(message.getHeader().getSender())
                             .timestamp(message.getHeader().getTimestamp()).build(),
-                            PromptMsgProperty.LOGOUT_SUCCESS.getBytes(PromptMsgProperty.charset)));
+                            PromptMsgProperty.LOGOUT_SUCCESS.getBytes(PromptMsgProperty.CHARSET)));
             clientChannel.write(ByteBuffer.wrap(response));
             onlineUsers.decrementAndGet();
             //下线广播
@@ -52,7 +52,7 @@ public class LogoutMessageHandler extends MessageHandler {
                                     .type(ResponseType.NORMAL)
                                     .sender(SYSTEM_SENDER)
                                     .timestamp(message.getHeader().getTimestamp()).build(),
-                            String.format(PromptMsgProperty.LOGOUT_BROADCAST, message.getHeader().getSender()).getBytes(PromptMsgProperty.charset)));
+                            String.format(PromptMsgProperty.LOGOUT_BROADCAST, message.getHeader().getSender()).getBytes(PromptMsgProperty.CHARSET)));
             super.broadcast(logoutBroadcast, server);
             log.info("客户端退出");
             //必须要cancel，否则无法从keys从去除该客户端

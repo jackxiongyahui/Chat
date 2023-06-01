@@ -16,17 +16,17 @@ public final class SpringContextUtil {
     }
 
     // Spring应用上下文环境  
-    private static ApplicationContext applicationContext;
+    private static final ApplicationContext APPLICATION_CONTEXT;
 
     static {
-        applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        APPLICATION_CONTEXT = new ClassPathXmlApplicationContext("applicationContext.xml");
     }
 
     public static <T> T getBean(String beanId) {
         T bean = null;
         try {
             if (StringUtils.isNotEmpty(StringUtils.trim(beanId))) {
-                bean = (T) applicationContext.getBean(beanId);
+                bean = (T) APPLICATION_CONTEXT.getBean(beanId);
             }
         } catch (NoSuchBeanDefinitionException e) {
             log.error("获取bean失败");

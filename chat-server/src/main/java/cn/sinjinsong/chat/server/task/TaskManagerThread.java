@@ -11,17 +11,19 @@ import java.io.IOException;
 import java.util.concurrent.*;
 
 /**
- * Created by SinjinSong on 2017/5/23.
+ *
+ * @author SinjinSong
+ * @date 2017/5/23
  * 消费者
  * 负责从阻塞队列中取出任务并提交给线程池
  */
 @Slf4j
 public class TaskManagerThread extends Thread {
-    private ExecutorService taskPool;
-    private BlockingQueue<Task> taskBlockingQueue;
-    private HttpConnectionManager httpConnectionManager;
+    private final ExecutorService taskPool;
+    private final BlockingQueue<Task> taskBlockingQueue;
+    private final HttpConnectionManager httpConnectionManager;
 
-    private ExecutorService crawlerPool;
+    private final ExecutorService crawlerPool;
 
 
     public TaskManagerThread(BlockingQueue<Task> taskBlockingQueue) {

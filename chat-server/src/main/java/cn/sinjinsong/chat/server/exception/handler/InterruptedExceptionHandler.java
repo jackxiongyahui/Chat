@@ -26,7 +26,7 @@ public class InterruptedExceptionHandler {
                                     .type(ResponseType.PROMPT)
                                     .sender(message.getHeader().getSender())
                                     .timestamp(message.getHeader().getTimestamp()).build(),
-                            PromptMsgProperty.SERVER_ERROR.getBytes(PromptMsgProperty.charset)));
+                            PromptMsgProperty.SERVER_ERROR.getBytes(PromptMsgProperty.CHARSET)));
             channel.write(ByteBuffer.wrap(response));
         } catch (IOException e) {
             e.printStackTrace();

@@ -35,11 +35,10 @@ public class CrawlImageTaskHandler extends BaseTaskHandler {
      * 其实在阻塞在第一个任务时，第二个task的任务已经早就完成了，显然这种情况用future task不合适的，效率也不高。
      *
      * @return
-     * @throws IOException
      * @throws InterruptedException
      */
     @Override
-    protected Response process() throws IOException, InterruptedException {
+    protected Response process() throws InterruptedException {
         MessageHeader header = info.getMessage().getHeader();
         Request request = RequestParser.parse(info.getDesc());
         List<String> urls = ImageURLCrawlerUtil.crawl(request);

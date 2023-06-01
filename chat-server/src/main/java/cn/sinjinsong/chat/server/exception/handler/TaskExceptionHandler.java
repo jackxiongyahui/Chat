@@ -37,7 +37,7 @@ public class TaskExceptionHandler implements Thread.UncaughtExceptionHandler{
                                         .type(ResponseType.PROMPT)
                                         .sender(message.getHeader().getSender())
                                         .timestamp(message.getHeader().getTimestamp()).build(),
-                                PromptMsgProperty.TASK_FAILURE.getBytes(PromptMsgProperty.charset)));
+                                PromptMsgProperty.TASK_FAILURE.getBytes(PromptMsgProperty.CHARSET)));
                 log.info("返回任务执行失败信息");
                 task.getReceiver().write(ByteBuffer.wrap(response));
             }
